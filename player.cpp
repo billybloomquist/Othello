@@ -53,20 +53,43 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * TODO: Implement how moves your AI should play here. You should first
      * process the opponent's opponents move before calculating your own move
      */ 
+    int bestScore;
+    int tempScore;
+    Move *bestMove = NULL;
     if (opponentsMove != NULL)
 	{
 		myBoard->doMove(opponentsMove, theirSide);
 	}
 	
 	if (myBoard->isDone() == false || myBoard->hasMoves(mySide) == false)
-		return NULL
+		return NULL;
 	
-	
-     
-<<<<<<< HEAD
-    Move myMove;
-    return myMove;
-=======
-    return NULL;
->>>>>>> 76fdbf1fa3107f3d5668e8d6804040bbcf17ca81
+	for (unsigned int i = 0; i < 8; i++)
+	{
+		for(unsigned int j = 0; j< 8; j++)
+		{
+			Move *tempMove(i, j);
+			if (myBoard->checkMove(tempMove, mySide))
+			{
+				Board *tempBoard = myBoard->copy();
+				tempBoard->doMove(tempMove, mySide);
+				tempScore = tempBoard->count(mySide) 
+					- tempBoard->count(theirSide);
+				if (bestMove == NULL)
+				{
+					bestScore = tempScore;
+					bestMove = tempMove;
+				}
+				else if (tempScore > bestScore)
+				{
+					bestMove = tempMove;
+					bestScore = tempScore;
+				}
+				delete tempBoard;		
+			}
+		}
+	}
+	return bestMove;
+    
+
 }
