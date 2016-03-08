@@ -61,12 +61,12 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         myBoard->doMove(opponentsMove, theirSide);
     }
 	
-    if (myBoard->isDone() == false || myBoard->hasMoves(mySide) == false)
+    if (myBoard->isDone() || myBoard->hasMoves(mySide) == false)
         return NULL;
 	
     for (int i = 0; i < 8; i++)
     {
-        for(int j = 0; j< 8; j++)
+        for(int j = 0; j < 8; j++)
         {
             Move *tempMove = new Move(i, j);
             if (myBoard->checkMove(tempMove, mySide))
