@@ -75,7 +75,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
                 Board *tempBoard = myBoard->copy();
                 
                 tempBoard->doMove(tempMove, mySide);
-                tempScore = getScore(tempBoard);
+                tempScore = tempBoard->getScore(mySide);
                 if (bestMove == NULL)
                 {
                     bestScore = tempScore;
@@ -95,24 +95,3 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     return bestMove;
 }
 
-int Player::getScore(Board *board) 
-{
-    int score = 0;
-
-    for(int i = 0; i < 8; i++) {
-        for(int j = 0; j < 8; j++) {
-            if(board->occupied(i, j)) {
-                // if a corner
-                if( (i == 0 || i == 7) && (j == 0 || j == 7) ) {
-                    // if our color
-                    if(board->get(mySide, i, j)) {
-                        score += 3;
-                    }
-                    else {
-                        score -= 3;
-                    }
-                }
-            }
-        }
-    }
-}

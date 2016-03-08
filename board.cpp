@@ -178,3 +178,26 @@ void Board::setBoard(char data[]) {
         }
     }
 }
+
+int Board::getScore(Side side) 
+{
+    int score = 0;
+
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            if(occupied(i, j)) {
+                // if a corner
+                if( (i == 0 || i == 7) && (j == 0 || j == 7) ) {
+                    // if our color
+                    if(get(side, i, j)) {
+                        score += 3;
+                    }
+                    else {
+                        score -= 3;
+                    }
+                }
+            }
+        }
+    }
+}
+
