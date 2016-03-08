@@ -1,4 +1,5 @@
 #include "player.h"
+#include <stdio.h>
 
 
 // Small change
@@ -68,27 +69,37 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     {
         for(int j = 0; j < 8; j++)
         {
+			fprintf(stderr, "checking move: (%d, %d)\n", i, j);
             Move *tempMove = new Move(i, j);
             if (myBoard->checkMove(tempMove, mySide))
             {
+				fprintf(stderr, "temp (%d, %d)\n", tempMove->getX(), tempMove->getY());
                 Board *tempBoard = myBoard->copy();
+                
                 tempBoard->doMove(tempMove, mySide);
                 tempScore = tempBoard->count(mySide) 
                             - tempBoard->count(theirSide);
+                fprintf(stderr, "    temp score %d\n", tempScore);
                 if (bestMove == NULL)
                 {
                     bestScore = tempScore;
+                    fprintf(stderr, "INIF: (%d, %d)\n", tempMove->getX(), tempMove->getY());
                     bestMove = tempMove;
+                    fprintf(stderr, "one more (%d, %d)\n", bestMove->getX(), bestMove->getY());
                 }
                 else if (tempScore > bestScore)
                 {
-                    bestMove = tempMove;
+                    *bestMove = *tempMove;
                     bestScore = tempScore;
                 }
-	        delete tempBoard;
+	            delete tempBoard;
             }
-            delete tempMove;
+            //delete tempMove;
+            if(bestMove != NULL) {
+            fprintf(stderr, "Best move: (%d, %d)\n", bestMove->getX(), bestMove->getY());
+		}
         }
     }
+    myBoard->doMove(bestMove, mySide);
     return bestMove;
 }
