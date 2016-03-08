@@ -7,6 +7,11 @@
 using namespace std;
 
 class Player {
+	
+private:
+	Board *myBoard;
+	Side mySide;
+	Side theirSide;
 
 public:
     Player(Side side);
