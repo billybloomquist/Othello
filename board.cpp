@@ -10,7 +10,22 @@ Board::Board() {
     taken.set(4 + 8 * 4);
     black.set(4 + 8 * 3);
     black.set(3 + 8 * 4);
+
 }
+
+static int val[8][8] = {
+        {3, -2, 2, 2, 2, 2, -2, 3},
+        {-2, -3, 1, 1, 1, 1, -3, -2},
+        {2, 1, 1, 1, 1, 1, 1, 2},
+        {2, 1, 1, 1, 1, 1, 1, 2},
+        {2, 1, 1, 1, 1, 1, 1, 2},
+        {2, 1, 1, 1, 1, 1, 1, 2},
+        {-2, -3, 1, 1, 1, 1, -3, -2},
+        {3, -2, 2, 2, 2, 2, -2, 3},
+    };
+
+
+
 
 /*
  * Destructor for the board.
@@ -186,18 +201,16 @@ int Board::getScore(Side side)
     for(int i = 0; i < 8; i++) {
         for(int j = 0; j < 8; j++) {
             if(occupied(i, j)) {
-                // if a corner
-                if( (i == 0 || i == 7) && (j == 0 || j == 7) ) {
-                    // if our color
-                    if(get(side, i, j)) {
-                        score += 3;
-                    }
-                    else {
-                        score -= 3;
-                    }
+                // if ours
+                if(get(side, i, j)) {
+                    score += val[i][j];
+                }
+                else {
+                    score -= val[i][j];
                 }
             }
         }
     }
+    return score;
 }
 
