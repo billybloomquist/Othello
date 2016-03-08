@@ -63,6 +63,10 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	
 	
      
+<<<<<<< HEAD
     Move myMove;
     return myMove;
+=======
+    return NULL;
+>>>>>>> 76fdbf1fa3107f3d5668e8d6804040bbcf17ca81
 }
