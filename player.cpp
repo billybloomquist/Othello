@@ -79,19 +79,21 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
                 if (bestMove == NULL)
                 {
                     bestScore = tempScore;
-                    bestMove = tempMove;
+                    bestMove = new Move(tempMove->getX(), tempMove->getY());
                 }
                 else if (tempScore > bestScore)
                 {
-                    *bestMove = *tempMove;
+                    bestMove->setX(tempMove->getX());
+                    bestMove->setY(tempMove->getY());
                     bestScore = tempScore;
                 }
 	            delete tempBoard;
             }
-            //delete tempMove;
+            delete tempMove;
         }
     }
     myBoard->doMove(bestMove, mySide);
     return bestMove;
 }
+
 
