@@ -13,13 +13,13 @@
 Player::Player(Side side) {
     // Will be set to true in test_minimax.cpp.
     testingMinimax = false;
-	*myBoard = new Board;
+    myBoard = new Board();
     mySide = side;
     
     if (mySide == BLACK)
-		theirSide = WHITE;
-	else
-		theirSide = BLACK;
+        theirSide = WHITE;
+    else
+        theirSide = BLACK;
     
 
     /* 
@@ -57,39 +57,38 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     int tempScore;
     Move *bestMove = NULL;
     if (opponentsMove != NULL)
-	{
-		myBoard->doMove(opponentsMove, theirSide);
-	}
+    {
+        myBoard->doMove(opponentsMove, theirSide);
+    }
 	
-	if (myBoard->isDone() == false || myBoard->hasMoves(mySide) == false)
-		return NULL;
+    if (myBoard->isDone() == false || myBoard->hasMoves(mySide) == false)
+        return NULL;
 	
-	for (unsigned int i = 0; i < 8; i++)
-	{
-		for(unsigned int j = 0; j< 8; j++)
-		{
-			Move *tempMove(i, j);
-			if (myBoard->checkMove(tempMove, mySide))
-			{
-				Board *tempBoard = myBoard->copy();
-				tempBoard->doMove(tempMove, mySide);
-				tempScore = tempBoard->count(mySide) 
-					- tempBoard->count(theirSide);
-				if (bestMove == NULL)
-				{
-					bestScore = tempScore;
-					bestMove = tempMove;
-				}
-				else if (tempScore > bestScore)
-				{
-					bestMove = tempMove;
-					bestScore = tempScore;
-				}
-				delete tempBoard;		
-			}
-		}
-	}
-	return bestMove;
-    
-
+    for (int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j< 8; j++)
+        {
+            Move *tempMove = new Move(i, j);
+            if (myBoard->checkMove(tempMove, mySide))
+            {
+                Board *tempBoard = myBoard->copy();
+                tempBoard->doMove(tempMove, mySide);
+                tempScore = tempBoard->count(mySide) 
+                            - tempBoard->count(theirSide);
+                if (bestMove == NULL)
+                {
+                    bestScore = tempScore;
+                    bestMove = tempMove;
+                }
+                else if (tempScore > bestScore)
+                {
+                    bestMove = tempMove;
+                    bestScore = tempScore;
+                }
+	        delete tempBoard;
+            }
+            delete tempMove;
+        }
+    }
+    return bestMove;
 }
