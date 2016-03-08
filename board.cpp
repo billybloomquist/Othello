@@ -206,7 +206,9 @@ void Board::setBoard(char data[]) {
         }
     }
 }
-
+/**
+ * Counts score using the heuristic values for squares
+ */
 int Board::getScore(Side side) 
 {
     int score = 0;
@@ -226,6 +228,10 @@ int Board::getScore(Side side)
     }
     return score;
 }
+
+/**
+ * Counts score using the naive values for squares.  For Testing minimax
+ */
 int Board::getScoreNaive(Side side) 
 {
     int score = 0;

@@ -21,6 +21,8 @@ Player::Player(Side side) {
         theirSide = WHITE;
     else
         theirSide = BLACK;
+        
+     //Set sides
     
 
     /* 
@@ -32,6 +34,7 @@ Player::Player(Side side) {
 void Player::setBoard(Board *newBoard)
 {
 	myBoard = newBoard;
+	
 }
 /*
  * Destructor for the player.
@@ -62,10 +65,11 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     int tempScore2;
     Move *bestMove = NULL;
     Move *worstMove;
-    int worstScore;
+    int worstScore; //used for minimax
     if (opponentsMove != NULL)
     {
         myBoard->doMove(opponentsMove, theirSide);
+        //Check for move
     }
 	
     if (myBoard->isDone() || myBoard->hasMoves(mySide) == false)
@@ -78,6 +82,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 			worstScore = 10000;
 			worstMove = NULL;
             Move *tempMove = new Move(i, j);
+            //make move on copied board
             if (myBoard->checkMove(tempMove, mySide))
             {
                 Board *tempBoard = myBoard->copy();
@@ -92,10 +97,13 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 						{
 							Board *tempBoard2 = tempBoard->copy();
 							tempBoard2->doMove(oppMove, theirSide);
+							
 							if (testingMinimax)
 								tempScore2 = tempBoard2->getScoreNaive(mySide);
 							else
 								tempScore2 = tempBoard2->getScore(mySide);
+								//for testing Minimax
+								
 							if (worstMove == NULL)
 							{
 								worstScore = tempScore2;
@@ -105,23 +113,29 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 							{
 								worstScore = tempScore2;
 							}
+							//Search all possible moves and select least bad option
+							delete tempBoard2;
 						}
+						delete oppMove;
 					}
 				}
 				
                 if (bestMove == NULL)
                 {
                     bestScore = worstScore;
-                    bestMove = tempMove;
+                    bestMove = new Move(tempMove->getX(), tempMove->getY());
+                   
                 }
                 else if (worstScore > bestScore)
                 {
-                    *bestMove = *tempMove;
+                    bestMove->setX(tempMove->getX());
+                    bestMove->setY(tempMove->getY());
                     bestScore = worstScore;
+                     //replace with least bad option
                 }
 	            delete tempBoard;
             }
-            //delete tempMove;
+            delete tempMove;
         }
     }
     myBoard->doMove(bestMove, mySide);
