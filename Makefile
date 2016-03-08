@@ -3,7 +3,7 @@ CFLAGS      = -Wall -ansi -pedantic -ggdb
 OBJS        = player.o board.o
 PLAYERNAME  = player
 
-all: $(PLAYERNAME) testgame
+all: $(PLAYERNAME) something_clever
 	
 $(PLAYERNAME): $(OBJS) wrapper.o
 	$(CC) -o $@ $^
