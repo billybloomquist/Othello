@@ -23,7 +23,19 @@ static int val[8][8] = {
         {3, 1, 1, 1, 1, 1, 1, 3},
         {-3, -9, 1, 1, 1, 1, -9, -3},
         {9, -3, 3, 3, 3, 3, -3, 9},
-};
+ };
+ static int naiveVal[8][8] = 
+ {    
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+  }
+;
 
 
 
@@ -208,6 +220,25 @@ int Board::getScore(Side side)
                 }
                 else {
                     score -= val[i][j];
+                }
+            }
+        }
+    }
+    return score;
+}
+int Board::getScoreNaive(Side side) 
+{
+    int score = 0;
+
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            if(occupied(i, j)) {
+                // if ours
+                if(get(side, i, j)) {
+                    score += naiveVal[i][j];
+                }
+                else {
+                    score -= naiveVal[i][j];
                 }
             }
         }

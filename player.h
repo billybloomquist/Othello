@@ -16,7 +16,7 @@ private:
 public:
     Player(Side side);
     ~Player();
-    
+    void setBoard(Board *newBoard);
     Move *doMove(Move *opponentsMove, int msLeft);
     
 
